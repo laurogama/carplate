@@ -1,8 +1,10 @@
+import cv2
+
 from Settings import IMAGES_PATH, EXAMPLE, GRAYSCALE, MEDIAN_FILTER, THRESHOLD, ERODED, OUTPUT_TEXT_FILE
+
 
 __author__ = 'laurogama'
 import subprocess
-import time
 
 from SimpleCV import Camera, Image
 
@@ -54,12 +56,39 @@ def process_image():
     if plate:
         # if it finds blobs then draw around them
         plate.draw()
-    img.show()
-    time.sleep(10)
+    # img.show()
+    # time.sleep(10)
     return True
 
+
+def recognize_face(picture):
+    face_cascade = cv2.CascadeClassifier('data/haarcascades/haarcascade_frontalface_default.xml')
+    eye_cascade = cv2.CascadeClassifier('data/haarcascades/haarcascade_eye.xml')
+    gray = cv2.cvtColor(picture, cv2.COLOR_BGR2GRAY)
+
+    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+    if faces:
+        for (x, y, w, h) in faces:
+            cv2.rectangle(picture, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            roi_gray = gray[y:y + h, x:x + w]
+            roi_color = picture[y:y + h, x:x + w]
+            eyes = eye_cascade.detectMultiScale(roi_gray)
+            for (ex, ey, ew, eh) in eyes:
+                cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
+        cv2.imshow('img', picture)
+        print "click to end program"
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+        return None
+    print "Face not recognized"
 
 def execute_tesseract(filename=None):
     if filename is not None:
         subprocess.call(["tesseract", filename, OUTPUT_TEXT_FILE])
-        pass
+        return True
+    return False
+
+
+def execute_ocr():
+    process_image()
+    execute_tesseract(THRESHOLD + ".png")

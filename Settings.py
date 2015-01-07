@@ -5,6 +5,7 @@ import os
 EXAMPLE = "104_4552.jpg"
 
 IMAGES_PATH = "images/"
+FACES_OUTPUT = "output/faces/"
 OUTPUT_DIR = "output/"
 ORIGINAL = IMAGES_PATH + "original.jpg"
 GRAYSCALE = IMAGES_PATH + "grayscale"
@@ -14,6 +15,7 @@ THRESHOLD = IMAGES_PATH + "threshold"
 ERODED = IMAGES_PATH + "eroded"
 MEDIAN_FILTER = IMAGES_PATH + "median_filter"
 OUTPUT_TEXT_FILE = OUTPUT_DIR + "output"
+FACES = IMAGES_PATH + "faces"
 
 #Db config
 DATABASE_URL="postgresql://localhost/carplate_dev"
