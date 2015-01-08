@@ -1,7 +1,5 @@
 __author__ = 'laurogama'
 
-import os
-
 EXAMPLE = "104_4552.jpg"
 
 IMAGES_PATH = "images/"
@@ -17,8 +15,11 @@ MEDIAN_FILTER = IMAGES_PATH + "median_filter"
 OUTPUT_TEXT_FILE = OUTPUT_DIR + "output"
 FACES = IMAGES_PATH + "faces"
 
-#Db config
-DATABASE_URL="postgresql://localhost/carplate_dev"
+ALLOWED_FILE_FORMAT = ['jpg', 'jpeg', 'png']
+
+# Db config
+DATABASE_URL = "postgresql://localhost/carplate_dev"
+
 
 class Config(object):
     DEBUG = False
